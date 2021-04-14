@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Menu.unity
+    path: Assets/Scenes/Menu.unity
     guid: 79179d0e6b618464fba5ddb16d15cc84
   - enabled: 1
-    path: Assets/PracticeScreen.unity
+    path: Assets/Scenes/PracticeScreen.unity
     guid: c11c759a96dc2cf4da5f846c3823bc0a
   - enabled: 1
-    path: Assets/InGameScreen.unity
+    path: Assets/Scenes/InGameScreen.unity
     guid: 7119f78697639b54a89c87afc18e4ce4
   m_configObjects: {}
