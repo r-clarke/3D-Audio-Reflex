@@ -282,6 +282,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8084ead458fa90145ad15e9fbcea96de, type: 3}
   - {fileID: 8300000, guid: df06a75a3fc350c42b1a9a2b13fafec4, type: 3}
   - {fileID: 8300000, guid: 14decee99c36ade44a589449ff9b3055, type: 3}
+  failureSound: {fileID: 8300000, guid: 35eb7f04b9f3e5d45bd72e0f479d7ccc, type: 3}
   m_audioSource: {fileID: 56828325}
   selected: 0
 --- !u!4 &56828324
