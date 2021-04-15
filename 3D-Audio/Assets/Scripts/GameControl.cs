@@ -16,6 +16,7 @@ public class GameControl : MonoBehaviour
     private Text statusText;
 
     public AudioClip[] testingSounds;
+    public AudioClip failureSound;
     public AudioSource m_audioSource;
 
     private float reactionTime, startTime, totalTime;
@@ -244,6 +245,7 @@ public class GameControl : MonoBehaviour
                     else
                     {
                         //play wrong sound
+                        m_audioSource.PlayOneShot(failureSound);
                     }
                 }
             }
