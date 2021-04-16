@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class GameControl : MonoBehaviour
     public AudioSource m_audioSource;
 
     private float reactionTime, startTime, totalTime;
-    private bool clockIsTicking, timerCanBeStopped;
+    private bool clockIsTicking, timerCanBeStopped, gameStarted;
     private int counter, score;
     public int selected;
 
     void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
-        counter = 5;
+        counter = 30;
         score = 0;
         reactionTime = 0f;
         startTime = 0f;
@@ -36,6 +37,7 @@ public class GameControl : MonoBehaviour
         scoreText.text = "---";
         statusText.text = "Left Click to Begin!";
         clockIsTicking = false;
+        gameStarted = false;
         timerCanBeStopped = true;
     }
 
@@ -47,13 +49,15 @@ public class GameControl : MonoBehaviour
         {
             if (counter > 0) 
             { 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !gameStarted)
                 {
                     StartCoroutine("StartMeasuring");
                     gameText.text = "Wait";
                     scoreText.text = score.ToString();
+                    statusText.text = "Listen for the sound!";
                     clockIsTicking = true;
                     timerCanBeStopped = false;
+                    gameStarted = true;
                 }
                 else
                 {
@@ -245,7 +249,11 @@ public class GameControl : MonoBehaviour
                     else
                     {
                         //play wrong sound
-                        m_audioSource.PlayOneShot(failureSound);
+                        if (!Input.GetMouseButtonDown(0))
+                        {
+                            m_audioSource.PlayOneShot(failureSound);
+                        }
+                            
                     }
                 }
             }
@@ -253,8 +261,13 @@ public class GameControl : MonoBehaviour
         }
         if(counter == 0)
         {
-            statusText.text = "Final Score: " + score.ToString() + "\nAverage Speed: " + (totalTime / score).ToString("N3") + "s";
+            statusText.text = "Score: " + score.ToString() + "\nAverage Speed: " + (totalTime / score).ToString("N3") + "s";
         }
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
     }
 
     private IEnumerator StartMeasuring()
