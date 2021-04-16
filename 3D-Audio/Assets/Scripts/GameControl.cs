@@ -18,6 +18,8 @@ public class GameControl : MonoBehaviour
 
     public AudioClip[] testingSounds;
     public AudioClip failureSound;
+    public AudioClip gameOverSound;
+
     public AudioSource m_audioSource;
 
     private float reactionTime, startTime, totalTime;
@@ -261,7 +263,13 @@ public class GameControl : MonoBehaviour
         }
         if(counter == 0)
         {
-            statusText.text = "Score: " + score.ToString() + "\nAverage Speed: " + (totalTime / score).ToString("N3") + "s";
+            
+            statusText.text = "Total Score: " + score.ToString() + "\nAverage Speed: " + (totalTime / score).ToString("N3");
+            if (gameStarted)
+            {
+                m_audioSource.PlayOneShot(gameOverSound);
+            }
+            gameStarted = false;
         }
     }
 
