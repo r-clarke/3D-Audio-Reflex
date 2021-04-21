@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ public class GameControl : MonoBehaviour
 
     public AudioSource m_audioSource;
 
-    private float reactionTime, startTime, totalTime;
+    private float reactionTime, startTime, totalTime, totalAverage;
     private bool clockIsTicking, timerCanBeStopped, gameStarted;
     private int counter, score;
     public int selected;
@@ -30,10 +31,11 @@ public class GameControl : MonoBehaviour
     void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
-        counter = 30;
+        counter = 5;
         score = 0;
         reactionTime = 0f;
         startTime = 0f;
+        totalAverage = 0f;
         totalTime = 0f;
         gameText.text = "---";
         scoreText.text = "---";
@@ -263,8 +265,29 @@ public class GameControl : MonoBehaviour
         }
         if(counter == 0)
         {
+            totalAverage = totalTime / score;
+
+            statusText.text = "Total Score: " + score.ToString() + "\nAverage Speed: " + totalAverage.ToString("N3");
             
-            statusText.text = "Total Score: " + score.ToString() + "\nAverage Speed: " + (totalTime / score).ToString("N3");
+
+            if (PlayerPrefs.HasKey("HighScore"))
+            {
+                string totalScore = totalAverage.ToString("N3");
+                string oldScore = PlayerPrefs.GetString("HighScore");
+                float temp = float.Parse(oldScore, System.Globalization.CultureInfo.InvariantCulture);
+                if (temp > totalAverage)
+                {
+                    PlayerPrefs.SetString("HighScore", totalScore);
+                }
+            }
+            else
+            {
+                PlayerPrefs.SetString("HighScore", totalAverage.ToString("N3"));
+            }
+
+
+
+
             if (gameStarted)
             {
                 m_audioSource.PlayOneShot(gameOverSound);
