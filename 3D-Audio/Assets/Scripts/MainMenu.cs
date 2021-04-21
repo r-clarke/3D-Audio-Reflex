@@ -14,7 +14,6 @@ public class MainMenu : MonoBehaviour
         HighScore.text = "Text";
         if (PlayerPrefs.HasKey("HighScore"))
         {
-            //Thanks Jimmy 
             HighScore.text = "Average Reaction Time: " + PlayerPrefs.GetString("HighScore") + " seconds!"; ;
         }
         else
